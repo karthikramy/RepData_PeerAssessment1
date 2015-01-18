@@ -1,26 +1,23 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
 
-```{r}
+
+```r
 unzip("activity.zip")
 activity <- read.csv("activity.csv")
-
 ```
 
 ## What is mean total number of steps taken per day?
 
-```{r}
+
+```r
 steps.date <- aggregate(steps ~ date, data = activity, FUN = sum)
 barplot(steps.date$steps, names.arg = steps.date$date, xlab = "date", ylab = "steps")
-
 ```
+
+![plot of chunk unnamed-chunk-2](./PA1_template_files/figure-html/unnamed-chunk-2.png) 
 
 ## What is the average daily activity pattern?
 

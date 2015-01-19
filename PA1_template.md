@@ -99,4 +99,47 @@ The update mean is 1.0766 &times; 10<sup>4</sup> and Median is 1.0766 &times; 10
 ## Are there differences in activity patterns between weekdays and weekends?
 1.Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
+```r
+daytype <- function(date) {
+     if (weekdays(as.Date(date)) %in% c("Saturday", "Sunday")) {
+         "weekend"
+     } else {
+         "weekday"
+     }
+ }
+upd_activity$daytyp <- as.factor(sapply(upd_activity$date, daytype))
+```
+
 2.Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+
+```r
+library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+## 
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+## 
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```r
+library(ggplot2)
+act_grp_typ <- upd_activity %.% group_by(interval, daytyp ) %.% summarise(meanSteps = mean(steps, 
+    na.rm = TRUE))
+
+
+plotf  <- ggplot(data = act_grp_typ, mapping = aes(x = interval, y = meanSteps)) + 
+    geom_line() + facet_grid(daytyp ~ .) + scale_x_continuous("Day Interval", 
+    breaks = seq(min(act_grp_typ$interval), max(act_grp_typ$interval), 100)) + 
+    scale_y_continuous("Average Number of Steps") + ggtitle("Average Number of Steps Taken by Interval")
+plotf
+```
+
+![plot of chunk unnamed-chunk-12](./PA1_template_files/figure-html/unnamed-chunk-12.png) 

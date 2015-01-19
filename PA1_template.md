@@ -114,22 +114,6 @@ upd_activity$daytyp <- as.factor(sapply(upd_activity$date, daytype))
 
 ```r
 library(dplyr)
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-## 
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-## 
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```r
 library(ggplot2)
 act_grp_typ <- upd_activity %.% group_by(interval, daytyp ) %.% summarise(meanSteps = mean(steps, 
     na.rm = TRUE))
